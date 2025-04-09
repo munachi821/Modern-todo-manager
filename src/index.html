@@ -4,11 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="./output.css" rel="stylesheet">
+  <link rel="stylesheet" href="/fontawesome-free-6.4.2-web/fontawesome-free-6.4.2-web/css/all.min.css">
   <title>Modern todo-list app</title>
 </head>
-<body class="bg-cover bg-center h-screen w-screen" style="background: url('todo-list-bg.png');">
-    <div id="todo-container" class="bg-[#3C424A] max-w-[420px] h-10 rounded-lg my-[135px] mx-auto">
+<body class="w-screen h-screen overflow-hidden bg-center bg-cover font-[roboto]" style="background: url('todo-list-bg.png');">
+    <div id="todo-container" class="bg-[#3C424A] max-w-[512px] h-fit rounded-lg my-[135px] mx-auto pb-4">
+        <!-- input section -->
+        <div class="flex items-center">
+            <div class="flex my-[20px] mx-auto">
+                <div class="h-[50px] bg-[#343A40] flex items-center rounded-tl-sm rounded-bl-sm p-2 border-[#4B4B4D] border border-r-[#343A40] justify-center">
+                    <img src="bars-icon.svg" alt="bars-icon">
+                </div>
+                <input type="text" placeholder="Add a task..." class="w-[400px] h-[50px] bg-[#343A40] outline-none border-l-[#343A40] p-2 rounded-tl-none rounded-bl-none rounded-sm text-white border-[#4B4B4D] border">
+            </div>
+        </div>
+        <!-- input section end -->
 
+        <!-- Fitration section -->
+         <div class="flex mx-[34px] justify-between items-center text-lg border-b-2 border-b-[#343A40] p-0.4">
+            <div class="flex space-x-3.5 text-[#96989A]">
+                <p class="text-[#F1789E] border-b-[2px] w-[30px] text-center border-b-[#FB6093] cursor-pointer">All</p>
+                <p class="cursor-pointer">Completed</p>
+                <p class="cursor-pointer">Pending</p>
+            </div>
+            <button class="text-[#FEFEFE] cursor-pointer">Clear All</button>
+         </div>
     </div>
 </body>
 </html>
