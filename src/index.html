@@ -23,7 +23,7 @@
       <div class="flex items-center">
         <div class="flex my-[20px] mx-auto">
           <div
-            class="h-[50px] bg-[#343A40] flex items-center rounded-tl-sm rounded-bl-sm p-2 border-[#4B4B4D] border border-r-[#343A40] justify-center"
+            class="h-[50px] bg-[#343A40] flex items-center rounded-tl-sm rounded-bl-sm p-2 border-[#4B4B4D] border border-r-[#343A40] justify-center pl-2"
           >
             <img src="bars-icon.svg" alt="bars-icon" />
           </div>
@@ -135,6 +135,7 @@
                 </li>
                 <li
                   class="flex items-center w-full space-x-2.5 cursor-pointer hover:bg-[#5a626f] p-1.5 rounded transition"
+                  id="notificationbtn"
                 >
                   <i class="far fa-bell text-[#E3E3E3]"></i>
                   <p class="text-[#c4c4c4]">Notification</p>
@@ -147,7 +148,11 @@
     </div>
 
     <!-- Notification Alert -->
-    <div class="fixed bg-white shadow-lg w-[320px] rounded p-2 left-4 bottom-4">
+    <!-- the left should be left-4 -->
+    <div
+      class="absolute bg-white shadow-lg w-[320px] rounded p-2 left-[-350px] bottom-[144px] transition duration-200 opacity-0 scale-0"
+      id="notification"
+    >
       <ul>
         <li class="font-medium text-[18px]">Set a notification for:</li>
         <li class="text-[18px]">Getting an invite for dribble</li>
@@ -170,5 +175,7 @@
         </div>
       </ul>
     </div>
+
+    <script src="script.js"></script>
   </body>
 </html>
