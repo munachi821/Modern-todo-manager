@@ -8,12 +8,16 @@
     <title>Modern todo-list app</title>
   </head>
   <body
-    class="w-screen h-screen overflow-hidden bg-center bg-cover font-[roboto] relative"
-    style="background: url('todo-list-bg.png')"
+    class="w-screen h-screen overflow-hidden font-[roboto] relative"
+    style="
+      background: url('todo-list-bg.png');
+      background-position: center;
+      background-size: cover;
+    "
   >
     <div
       id="todo-container"
-      class="bg-[#3C424A] max-w-[512px] h-fit rounded-lg my-[135px] mx-auto pb-4 pt-4 shadow-2xl"
+      class="bg-[#3C424A] max-w-[512px] h-fit rounded-lg my-[135px] mx-auto pb-4 pt-4 shadow-lg"
     >
       <!-- input section -->
       <div class="flex items-center">
@@ -143,13 +147,26 @@
     </div>
 
     <!-- Notification Alert -->
-    <div class="fixed">
+    <div class="fixed bg-white shadow-lg w-[320px] rounded p-2 left-4 bottom-4">
       <ul>
-        <li class="">Getting an invite for dribble</li>
-        <div class="">
-          <i class="fa-solid fa-sharp fa-plus"></i>
-          <p>00:00</p>
-          <i class="fa-solid fa-sharp fa-minus"></i>
+        <li class="font-medium text-[18px]">Set a notification for:</li>
+        <li class="text-[18px]">Getting an invite for dribble</li>
+        <div class="flex justify-between mt-2">
+          <div class="flex p-2 space-x-2 items-center">
+            <i
+              class="fa-solid fa-sharp fa-plus bg-[#d4d4d4] rounded-full flex items-center self-center p-1.5 cursor-pointer text-[#606061]"
+            ></i>
+            <p class="text-[17px]">00:00</p>
+            <i
+              class="fa-solid fa-sharp fa-minus bg-[#d4d4d4] rounded-full flex items-center self-center p-1.5 cursor-pointer text-[#606061]"
+            ></i>
+          </div>
+          <button
+            class="border-none border-[#343A40] px-1.5 py-2 rounded cursor-pointer shadow-lg bg-[#ececec] flex items-center self-center"
+          >
+            <i class="fa-solid fa-bell-slash mr-1 text-xl"></i>
+            Set notification
+          </button>
         </div>
       </ul>
     </div>
