@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
 .active {
-  @apply w-8 text-center text-pink-500 border-b-2 border-pink-400;
+  @apply text-center text-pink-500 border-b-2 border-pink-400;
+}
+.checked{
+  @apply line-through decoration-[#fff] decoration-[2px];
 }
