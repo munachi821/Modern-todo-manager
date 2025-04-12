@@ -61,7 +61,7 @@ function showTodo(filter){
                                   class="flex items-center w-full space-x-2.5 cursor-pointer hover:bg-[#5a626f] p-1.5 rounded transition"
                                 >
                                   <i
-                                    class="fa-sharp fa-solid fa-thumbtack-slash text-[#E3E3E3]"
+                                    class="fa-solid fa-thumbtack text-[#E3E3E3]"/* fa-solid fa-thumbstack */
                                   ></i>
                                   <p class="text-[#c4c4c4]">Pin on the top</p>
                                 </li>
@@ -79,13 +79,15 @@ function showTodo(filter){
                                   <i class="far fa-trash-alt text-[#E3E3E3]"></i>
                                   <p class="text-[#c4c4c4]">Delete task</p>
                                 </li>
-                                <li
-                                  class="flex items-center w-full space-x-2.5 cursor-pointer hover:bg-[#5a626f] p-1.5 rounded transition"
-                                  onclick="showNotification(this)"
-                                >
-                                  <i class="far fa-bell text-[#E3E3E3]"></i>
-                                  <p class="text-[#c4c4c4]">Notification</p>
-                                </li>
+                                ${todo.status !== "completed" ? `
+                                  <li
+                                    class="flex items-center w-full space-x-2.5 cursor-pointer hover:bg-[#5a626f] p-1.5 rounded transition"
+                                    onclick="showNotification(this, '${todo.name}')"
+                                  >
+                                    <i class="far fa-bell text-[#E3E3E3]"></i>
+                                    <p class="text-[#c4c4c4]">Notification</p>
+                                  </li>
+                                `:""}
                               </ul>
                             </div>
                           </div>
@@ -99,20 +101,108 @@ function showTodo(filter){
 
 showTodo("all");
 
-function showNotification(userNotificaation) {
-  notification.classList.remove("opacity-0", "scale-0", "left-[-350px]");
-  notification.classList.add("left-4");
-  
-  // Hide the notification when clicking outside of it
-  document.addEventListener("click", (e) => {
-    
-    if (!notification.contains(e.target) && e.target !== userNotificaation && e.target !== userNotificaation.lastElementChild) {
-        notification.classList.add("opacity-0", "scale-0", "left-[-350px]");
-        notification.classList.remove("left-4");
+//Notification function
+const closeBtn = document.getElementById("close-btn");
+const taskMsg = document.getElementById("taskMessage");
+
+let outsideClickListener; // define this outside the function
+
+let currentTaskid = null;
+
+function showNotification(userNotificationBtn, taskInfo) {
+  taskMsg.textContent = taskInfo;
+  handleNotificationclose();
+
+  const parentLi = userNotificationBtn.parentElement.parentElement.parentElement.parentElement;
+  console.log(parentLi)
+  currentTaskid = parseInt(parentLi.querySelector("input[type='checkbox']").id);
+  console.log(currentTaskid)
+
+  outsideClickListener = function (e) {
+    if (
+      !notification.contains(e.target) &&
+      e.target !== userNotificationBtn &&
+      e.target !== userNotificationBtn.lastElementChild
+    ) {
+      notification.classList.add("opacity-0", "scale-0", "left-[-350px]");
+      notification.classList.remove("left-4");
+      document.removeEventListener("click", outsideClickListener);
     }
+  };
+
+  // Add the listener
+  document.addEventListener("click", outsideClickListener);
+
+  // Close button
+  closeBtn.addEventListener("click", () => {
+    handleNotificationclose();
   });
 }
 
+
+const notificationBtn = document.getElementById("notificationBtn");
+notificationBtn.addEventListener("click", () => {
+  let countdownInterval;
+  const timeInput = document.getElementById("timeInput");
+  const timerCount = parseInt(timeInput.value);
+  if(isNaN(timerCount) || timerCount <= 0){
+    alert("please type a valid number");
+    timeInput.value = "";
+    return;
+  }
+  timeInput.value = "";
+  
+  if(Notification.permission !== "granted"){
+    Notification.requestPermission()
+  }
+
+  notification.classList.remove("opacity-0", "scale-0", "left-[-350px]");
+  notification.classList.add("left-4");
+  
+  const timeSelection = document.getElementById("unitSelect").value;
+
+  let totalSeconds;
+  if(timeSelection === "seconds")
+    totalSeconds = timerCount;
+  if(timeSelection === "minutes")
+    totalSeconds = timerCount * 60;
+  if(timeSelection === "hours")
+    totalSeconds = timerCount * 3600;
+  
+  countdownInterval = setInterval(() => {
+    totalSeconds--;
+    console.log(totalSeconds)
+
+    if(totalSeconds <= 0){
+      clearInterval(countdownInterval);
+      sendNotification("Timer done!", "Are you done with your task?");
+
+      if(currentTaskid !== null && todos[currentTaskid]){
+        todos[currentTaskid].status = "completed";
+        localStorage.setItem("todo-list", JSON.stringify(todos));
+        showTodo("all");
+        currentTaskid = null;
+      }
+    }
+  }, 1000);
+  
+  
+  function sendNotification(title, body){
+    if(Notification.permission === "granted"){
+      new Notification(title, {body});
+    }
+  }
+
+  notification.classList.add("opacity-0", "scale-0", "left-[-350px]");
+  notification.classList.remove("left-4");
+  document.removeEventListener("click", outsideClickListener);
+})
+
+function handleNotificationclose() {
+  notification.classList.remove("opacity-0", "scale-0", "left-[-350px]");
+  notification.classList.add("left-4");
+  document.removeEventListener("click", outsideClickListener);
+}
 
 
 let editId;

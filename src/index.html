@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="./output.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="/fontawesome-free-6.7.2-web/css/fontawesome.min.css"/>
+    <link href="./output.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/fontawesome-free-6.7.2-web/css/all.css" />
     <title>Modern todo-list app</title>
   </head>
   <body
@@ -44,10 +44,16 @@
       >
         <div class="flex space-x-3 text-[#96989A] filter">
           <p class="cursor-pointer active w-7" id="all">All</p>
-          <p class="cursor-pointer hover:text-[#f382a6dc] hover:transition w-[90px]" id="completed">
+          <p
+            class="cursor-pointer hover:text-[#f382a6dc] hover:transition w-[90px]"
+            id="completed"
+          >
             Completed
           </p>
-          <p class="cursor-pointer hover:text-[#f382a6dc] hover:transition w-[80px]" id="pending">
+          <p
+            class="cursor-pointer hover:text-[#f382a6dc] hover:transition w-[80px]"
+            id="pending"
+          >
             Pending
           </p>
         </div>
@@ -60,7 +66,8 @@
       </div>
       <!-- Filtration section end -->
 
-      <!-- Tasks section --> <!--max-h-[300px] overflow-y-auto pt-[49px]-->
+      <!-- Tasks section -->
+      <!--max-h-[300px] overflow-y-auto pt-[49px]-->
       <ul
         class="mx-[34.5px] flex items-center justify-center flex-col mt-5 space-y-2.5"
         id="ul"
@@ -95,28 +102,46 @@
     </div>
 
     <!-- Notification Alert -->
-    <!-- the left should be left-4 -->
     <div
       class="absolute bg-white shadow-lg w-[320px] rounded p-2 left-[-350px] bottom-[144px] transition duration-200 opacity-0 scale-0"
       id="notification"
     >
-      <ul>
-        <li class="font-medium text-[18px]">Set a notification for:</li>
-        <li class="text-[18px]">Getting an invite for dribble</li>
-        <div class="flex justify-between mt-2">
-          <div class="flex p-2 space-x-2 items-center">
-            <i
-              class="fa-solid fa-sharp fa-plus bg-[#d4d4d4] rounded-full flex items-center self-center p-1.5 cursor-pointer text-[#606061]"
-            ></i>
-            <p class="text-[17px]">00:00</p>
-            <i
-              class="fa-solid fa-sharp fa-minus bg-[#d4d4d4] rounded-full flex items-center self-center p-1.5 cursor-pointer text-[#606061]"
-            ></i>
+      <ul class="">
+        <div class="flex flex-row justify-between">
+          <div>
+            <li class="font-medium text-[17px]">Set a notification for:</li>
+            <li class="text-[16px]" id="taskMessage">
+              Getting an invite for dribble
+            </li>
+          </div>
+          <i
+            class="fa-solid fa-times text-red-600 text-[17px] cursor-pointer"
+            id="close-btn"
+          ></i>
+        </div>
+        <div class="flex justify-between mt-1.5">
+          <div class="flex w-[175px] items-center justify-between px-1">
+            <input
+              type="number"
+              id="timeInput"
+              placeholder="Enter time"
+              min="1"
+              class="w-22 text-[13px] h-7.5 rounded-none outline p-1 mr-1 outline-[#d4d4d4] focus:outline-[#7e7e7e]"
+            />
+            <select
+              id="unitSelect"
+              class="border border-[#d4d4d4] w-20 h-8 text-[13px] outline-none focus:border-[#7e7e7e]"
+            >
+              <option value="seconds">Seconds</option>
+              <option value="minutes">Minutes</option>
+              <option value="hours">Hours</option>
+            </select>
           </div>
           <button
-            class="border-none border-[#343A40] px-1.5 py-2 rounded cursor-pointer shadow-lg bg-[#ececec] flex items-center self-center"
+            class="border-none border-[#343A40] px-1.5 py-1 rounded cursor-pointer shadow-lg bg-[#ececec] flex items-center self-center text-[14px]"
+            id="notificationBtn"
           >
-            <i class="fa-solid fa-bell-slash mr-1 text-xl"></i>
+            <i class="fa-solid fa-bell mr-1 text-[17px] text-[#8b8b8b]"></i>
             Set notification
           </button>
         </div>
