@@ -97,6 +97,7 @@ function showTodo(filter){
     }
     //if li isn't empty then li will show if not span will show
     ul.innerHTML = li || `<span class="text-[#d4d4d4] text-[17px]">You don't have any task here</span>`;
+
 }
 
 showTodo("all");
@@ -114,9 +115,7 @@ function showNotification(userNotificationBtn, taskInfo) {
   handleNotificationclose();
 
   const parentLi = userNotificationBtn.parentElement.parentElement.parentElement.parentElement;
-  console.log(parentLi)
   currentTaskid = parseInt(parentLi.querySelector("input[type='checkbox']").id);
-  console.log(currentTaskid)
 
   outsideClickListener = function (e) {
     if (
@@ -175,7 +174,7 @@ notificationBtn.addEventListener("click", () => {
 
     if(totalSeconds <= 0){
       clearInterval(countdownInterval);
-      sendNotification("Timer done!", "Are you done with your task?");
+      sendNotification("Timer done!", `Are you done with the task: ${todos[currentTaskid].name}`);
 
       if(currentTaskid !== null && todos[currentTaskid]){
         todos[currentTaskid].status = "completed";
@@ -243,25 +242,22 @@ function showMenu(selectedTask){
 
 function updateStatus(selectedTask){
     let taskName = selectedTask.parentElement.lastElementChild;
-    console.log(selectedTask)
     if(selectedTask.checked){
         taskName.classList.add("checked");
         //changing the status of clicked task to completed
         todos[selectedTask.id].status = "completed";
-        console.log(selectedTask)
     }else{
         taskName.classList.remove("checked");
         //changing the status of clicked task to pending
         todos[selectedTask.id].status = "pending";
-        console.log(todos[selectedTask.id])
     }
     localStorage.setItem("todo-list", JSON.stringify(todos));
+    showTodo("all");
 }
 
 
 taskInput.addEventListener("keyup", (e) => {
     let userTask = taskInput.value.trim();
-    if(e.key === "Enter" && userTask){
         if (!isEditedTask){// if isEditedTask isn't true
             if(!todos){
                 todos = [];//if todos doesn't exist pass an empty array
