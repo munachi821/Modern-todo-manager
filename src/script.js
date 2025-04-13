@@ -258,6 +258,7 @@ function updateStatus(selectedTask){
 
 taskInput.addEventListener("keyup", (e) => {
     let userTask = taskInput.value.trim();
+    if(e.key === "Enter" && userTask){
         if (!isEditedTask){// if isEditedTask isn't true
             if(!todos){
                 todos = [];//if todos doesn't exist pass an empty array
