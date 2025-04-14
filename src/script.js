@@ -21,7 +21,7 @@ let period = hours >= 12 ? 'pm' : 'am';
 
 hours = hours % 12;// converting hours to a 12-hour time
 hours = hours ? hours : 12;// if it's 0 make it 12
-const time = `${hours}:${minutes.toString().padStart(2, '0')}${period}`// adding 0 to the minute
+const time = `${hours}:${minutes.toString().padStart(2, '0')} ${period}`// adding 0 to the minute
 
 //getting tasks saved in the localstorage
 let todos = JSON.parse(localStorage.getItem("todo-list"));
@@ -39,7 +39,7 @@ function showTodo(filter) {
         (filter === "pinned" && todo.status === "pinned")
       ) {
         li += `
-          <li class="relative flex items-center justify-between w-full py-1.5 border-b-2 border-b-[#343A40]">
+          <li class="relative flex items-center justify-between w-full py-1.5 ${todo.status === "pinned" ? 'border-b-2 border-b-[#343A40]' : ""}">
             ${todo.status === "pinned" ? 
               '<i class="fa-solid fa-thumbtack text-[#E3E3E3] absolute right-[453px] top-[14px]"></i>'
               : ""}
