@@ -8,20 +8,15 @@
     <title>Modern todo-list app</title>
   </head>
   <body
-    class="w-screen h-screen overflow-hidden font-[roboto] relative"
-    style="
-      background: url('todo-list-bg.png');
-      background-position: center;
-      background-size: cover;
-    "
+    class="w-screen h-screen overflow-hidden font-[roboto] relative sm:bg-[#aaa]"
   >
     <div
       id="todo-container"
-      class="bg-[#3C424A] max-w-[512px] h-fit rounded-lg my-[135px] mx-auto pb-4 pt-4 shadow-lg"
+      class="bg-[#3C424A] max-w-[512px] h-fit rounded-sm md:rounded-lg md:my-[135px] mx-auto py-4 shadow-lg my-[97px] max-h-[400px] overflow-y-auto overflow-x-hidden"
     >
       <!-- input section -->
-      <div class="flex items-center">
-        <div class="flex my-[20px] mx-auto">
+      <div class="flex items-center w-full">
+        <div class="flex my-[10px] md:my-[20px] px-2 w-full md:mx-[18px]">
           <div
             class="h-[50px] bg-[#343A40] flex items-center rounded-tl-sm rounded-bl-sm p-2 border-[#4B4B4D] border border-r-[#343A40] justify-center pl-2"
           >
@@ -32,7 +27,7 @@
             placeholder="Add a task..."
             id="task-input"
             autocomplete="off"
-            class="w-[400px] h-[50px] bg-[#343A40] outline-none border-l-[#343A40] p-2 rounded-tl-none rounded-bl-none rounded-sm text-white border-[#4B4B4D] border"
+            class="w-full h-[50px] bg-[#343A40] outline-none border-l-[#343A40] p-2 rounded-tl-none rounded-bl-none rounded-sm text-white border-[#4B4B4D] border"
           />
         </div>
       </div>
@@ -40,7 +35,7 @@
 
       <!-- Fitration section -->
       <div
-        class="flex mx-[34px] justify-between items-center text-lg border-b-2 border-b-[#343A40] p-0.4"
+        class="flex md:mx-8 justify-between items-center md:text-lg border-b-2 border-b-[#343A40] p-0.4 px-2 text-[17px]"
       >
         <div class="flex space-x-3 text-[#96989A] filter">
           <p class="cursor-pointer active w-7" id="all">All</p>
@@ -69,41 +64,14 @@
       <!-- Tasks section -->
       <!--max-h-[300px] overflow-y-auto pt-[49px]-->
       <ul
-        class="mx-[34.5px] flex items-center justify-center flex-col mt-5 space-y-2.5"
+        class="md:mx-8 mx-5 flex items-center justify-center flex-col mt-5 space-y-2.5"
         id="ul"
-      >
-        <!--<li
-          class="relative flex items-center justify-between w-full py-1.5 border-b-2 border-b-[#343A40]"
-        >
-          <img
-            src="keep_off_24dp_E3E3E3_FILL0_wght300_GRAD0_opsz24.png"
-            alt="unpin"
-            class="absolute h-6 right-[450px] top-[6px]"
-          />
-          <label for="0" class="flex items-center">
-            <input
-              type="checkbox"
-              class="w-[15px] h-[15px] rounded-lg mr-2 bg-[#484F59]"
-              id="0"
-            />
-            <p class="text-lg text-[#E6E7E8]">Getting an invite for dribble</p>
-          </label>
-          <div class="flex items-center space-x-3">
-            <p class="text-sm text-[#636466]">9:40pm</p>
-            <div class="">
-              <i
-                class="fas fa-ellipsis-h cursor-pointer text-[#E3E3E3]"
-                style="font-size: 24px"
-              ></i>
-            </div>
-          </div>
-        </li>-->
-      </ul>
+      ></ul>
     </div>
 
     <!-- Notification Alert -->
     <div
-      class="absolute bg-white shadow-lg w-[320px] rounded p-2 left-[-350px] bottom-[144px] transition duration-200 opacity-0 scale-0"
+      class="absolute bg-white shadow-lg w-[320px] rounded p-2 left-[9px] bottom-[108px] md:bottom-[144px] transition duration-200 opacity-0 scale-0"
       id="notification"
     >
       <ul class="">

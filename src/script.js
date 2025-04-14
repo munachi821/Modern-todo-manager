@@ -36,14 +36,13 @@ function showTodo(filter) {
         filter === "all" ||
         (filter === "completed" && todo.completed) ||
         (filter === "pending" && !todo.completed) ||
-        (filter === "pinned" && todo.status === "pinned")
-      ) {
+        (filter === "pinned" && todo.status === "pinned")) {
         li += `
           <li class="relative flex items-center justify-between w-full py-1.5 ${todo.status === "pinned" ? 'border-b-2 border-b-[#343A40]' : ""}">
             ${todo.status === "pinned" ? 
-              '<i class="fa-solid fa-thumbtack text-[#E3E3E3] absolute right-[453px] top-[14px]"></i>'
+              '<i class="fa-solid fa-thumbtack text-[#E3E3E3]  text-[12px] md:text-[15px] absolute -left-4 md:-left-5 pl-0.5 md:pl-0"></i>'
               : ""}
-            <label for="${id}" class="flex items-center">
+            <label for="${id}" class="flex items-center max-w-[252px] md:max-w-[295px]">
               <input
                 type="checkbox"
                 onclick="updateStatus(this)"
@@ -51,7 +50,7 @@ function showTodo(filter) {
                 id="${id}"
                 ${isCompleted}
               />
-              <p class="text-lg text-[#E6E7E8] ${isCompleted}">${todo.name}</p>
+              <p class="md:text-lg text-[16px] text-[#E6E7E8] ${isCompleted}">${todo.name}</p>
             </label>
             <div class="flex items-center space-x-3">
               <p class="text-sm text-[#636466]">${todo.time}</p>
@@ -63,8 +62,8 @@ function showTodo(filter) {
                 ></i>
 
                 <!-- Submenu -->
-                <ul class="absolute p-2 bg-[#484F59] rounded-lg top-[31px] left-[-14px] w-[165px] flex flex-col space-y-1 shadow-lg origin-top-left scale-0 z-10">
-                  <i class="absolute left-[17px] top-[-13px] text-2xl text-[#484F59] fas fa-caret-up"></i>
+                <ul class="absolute p-2 bg-[#484F59] rounded-sm md:rounded-lg top-[31px] left-[-143px] md:left-[-14px] w-[165px] origin-top-right flex flex-col space-y-1 shadow-lg md:origin-top-left scale-0 z-10">
+                  <i class="absolute left-[143px] md:left-[17px] top-[-13px] text-2xl text-[#484F59] fas fa-caret-up"></i>
 
                   <li class="flex items-center w-full space-x-2.5 cursor-pointer hover:bg-[#5a626f] p-1.5 rounded transition" onclick="PinTask(this)">
                     <i class="${todo.status === "pinned" ? "fa-solid fa-thumbtack-slash" : "fa-solid fa-thumbtack"} text-[#E3E3E3]"></i>
