@@ -205,11 +205,17 @@
   .top-\[6px\] {
     top: 6px;
   }
+  .top-\[14px\] {
+    top: 14px;
+  }
   .top-\[31px\] {
     top: 31px;
   }
   .right-\[450px\] {
     right: 450px;
+  }
+  .right-\[453px\] {
+    right: 453px;
   }
   .bottom-\[144px\] {
     bottom: 144px;
@@ -357,6 +363,10 @@
   }
   .origin-top-left {
     transform-origin: top left;
+  }
+  .translate-y-\[-100\%\] {
+    --tw-translate-y: -100%;
+    translate: var(--tw-translate-x) var(--tw-translate-y);
   }
   .scale-0 {
     --tw-scale-x: 0%;
@@ -707,6 +717,21 @@
   text-decoration-color: #fff;
   text-decoration-thickness: 2px;
 }
+@property --tw-translate-x {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tw-translate-y {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tw-translate-z {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
 @property --tw-scale-x {
   syntax: "*";
   inherits: false;
@@ -896,6 +921,9 @@
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
+      --tw-translate-x: 0;
+      --tw-translate-y: 0;
+      --tw-translate-z: 0;
       --tw-scale-x: 1;
       --tw-scale-y: 1;
       --tw-scale-z: 1;

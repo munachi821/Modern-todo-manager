@@ -13,94 +13,126 @@ filters.forEach(btn => {
     })
 })
 
+//getting time
+const date = new Date();
+let minutes = date.getMinutes();
+let hours = date.getHours();
+let period = hours >= 12 ? 'pm' : 'am';
+
+hours = hours % 12;// converting hours to a 12-hour time
+hours = hours ? hours : 12;// if it's 0 make it 12
+const time = `${hours}:${minutes.toString().padStart(2, '0')}${period}`// adding 0 to the minute
+
 //getting tasks saved in the localstorage
 let todos = JSON.parse(localStorage.getItem("todo-list"));
 
-function showTodo(filter){
-    let li = "";
-    if(todos){
-        todos.forEach((todo,id) => {
-            //if todo status is completed, set the isCompleted value to checked
-            let isCompleted = todo.status == "completed" ? "checked" : "";
-            if(filter == todo.status || filter == "all"){
-                li += `
-                        <li class="relative flex items-center justify-between w-full py-1.5 border-b-2 border-b-[#343A40]">
-                          <img
-                                  src="keep_off_24dp_E3E3E3_FILL0_wght300_GRAD0_opsz24.png"
-                                  alt="unpin"
-                                  class="absolute h-6 right-[450px] top-[6px]"
-                          />
-                          <label for="${id}" class="flex items-center">
-                            <input
-                              type="checkbox"
-                              onclick="updateStatus(this)"
-                              class="w-[15px] h-[15px] rounded-lg mr-2 bg-[#484F59]"
-                              id="${id}"
-                              ${isCompleted}
-                            />
-                            <p class="text-lg text-[#E6E7E8] ${isCompleted}" >${todo.name}</p>
-                          </label>
-                          <div class="flex items-center space-x-3">
-                            <p class="text-sm text-[#636466]">9:40pm</p>
-                            <div class="relative group">
-                              <i
-                                class="fas fa-ellipsis-h cursor-pointer text-[#E3E3E3] group-hover:scale-110 transition-transform"
-                                onclick="showMenu(this)"
-                                style="font-size: 24px"
-                              ></i>
-                
-                              <!-- Submenu -->
-                              <ul
-                                class="absolute p-2 bg-[#484F59] rounded-lg top-[31px] left-[-14px] w-[165px] flex flex-col space-y-1 shadow-lg origin-top-left scale-0 z-10"
-                              >
-                                <i
-                                  class="absolute left-[17px] top-[-13px] text-2xl text-[#484F59] fas fa-caret-up"
-                                ></i>
-                
-                                <li
-                                  class="flex items-center w-full space-x-2.5 cursor-pointer hover:bg-[#5a626f] p-1.5 rounded transition"
-                                >
-                                  <i
-                                    class="fa-solid fa-thumbtack text-[#E3E3E3]"/* fa-solid fa-thumbstack */
-                                  ></i>
-                                  <p class="text-[#c4c4c4]">Pin on the top</p>
-                                </li>
-                                <li
-                                  class="flex items-center w-full space-x-2.5 cursor-pointer hover:bg-[#5a626f] p-1.5 rounded transition"
-                                  onclick="editTask(${id}, '${todo.name}')"
-                                >
-                                  <i class="far fa-edit text-[#E3E3E3]"></i>
-                                  <p class="text-[#c4c4c4]">Edit task</p>
-                                </li>
-                                <li
-                                  class="flex items-center w-full space-x-2.5 cursor-pointer hover:bg-[#5a626f] p-1.5 rounded transition"
-                                  onclick="deleteTask(${id})"
-                                >
-                                  <i class="far fa-trash-alt text-[#E3E3E3]"></i>
-                                  <p class="text-[#c4c4c4]">Delete task</p>
-                                </li>
-                                ${todo.status !== "completed" ? `
-                                  <li
-                                    class="flex items-center w-full space-x-2.5 cursor-pointer hover:bg-[#5a626f] p-1.5 rounded transition"
-                                    onclick="showNotification(this, '${todo.name}')"
-                                  >
-                                    <i class="far fa-bell text-[#E3E3E3]"></i>
-                                    <p class="text-[#c4c4c4]">Notification</p>
-                                  </li>
-                                `:""}
-                              </ul>
-                            </div>
-                          </div>
-                        </li>`
-            }
-        })
-    }
-    //if li isn't empty then li will show if not span will show
-    ul.innerHTML = li || `<span class="text-[#d4d4d4] text-[17px]">You don't have any task here</span>`;
+function showTodo(filter) {
+  let li = "";
+  if (todos) {
+    todos.forEach((todo, id) => {
+      let isCompleted = todo.completed ? "checked" : "";
 
+      if (
+        filter === "all" ||
+        (filter === "completed" && todo.completed) ||
+        (filter === "pending" && !todo.completed) ||
+        (filter === "pinned" && todo.status === "pinned")
+      ) {
+        li += `
+          <li class="relative flex items-center justify-between w-full py-1.5 border-b-2 border-b-[#343A40]">
+            ${todo.status === "pinned" ? 
+              '<i class="fa-solid fa-thumbtack text-[#E3E3E3] absolute right-[453px] top-[14px]"></i>'
+              : ""}
+            <label for="${id}" class="flex items-center">
+              <input
+                type="checkbox"
+                onclick="updateStatus(this)"
+                class="w-[15px] h-[15px] rounded-lg mr-2 bg-[#484F59]"
+                id="${id}"
+                ${isCompleted}
+              />
+              <p class="text-lg text-[#E6E7E8] ${isCompleted}">${todo.name}</p>
+            </label>
+            <div class="flex items-center space-x-3">
+              <p class="text-sm text-[#636466]">${todo.time}</p>
+              <div class="relative group">
+                <i
+                  class="fas fa-ellipsis-h cursor-pointer text-[#E3E3E3] group-hover:scale-110 transition-transform"
+                  onclick="showMenu(this)"
+                  style="font-size: 24px"
+                ></i>
+
+                <!-- Submenu -->
+                <ul class="absolute p-2 bg-[#484F59] rounded-lg top-[31px] left-[-14px] w-[165px] flex flex-col space-y-1 shadow-lg origin-top-left scale-0 z-10">
+                  <i class="absolute left-[17px] top-[-13px] text-2xl text-[#484F59] fas fa-caret-up"></i>
+
+                  <li class="flex items-center w-full space-x-2.5 cursor-pointer hover:bg-[#5a626f] p-1.5 rounded transition" onclick="PinTask(this)">
+                    <i class="${todo.status === "pinned" ? "fa-solid fa-thumbtack-slash" : "fa-solid fa-thumbtack"} text-[#E3E3E3]"></i>
+                    <p class="text-[#c4c4c4]">${todo.status === "pinned" ? "Unpin Task" : "Pin on the top"}</p>
+                  </li>
+
+                  <li class="flex items-center w-full space-x-2.5 cursor-pointer hover:bg-[#5a626f] p-1.5 rounded transition" onclick="deleteTask(${id})">
+                    <i class="far fa-trash-alt text-[#E3E3E3]"></i>
+                    <p class="text-[#c4c4c4]">Delete task</p>
+                  </li>
+
+                  ${!todo.completed ? `
+                    <li class="flex items-center w-full space-x-2.5 cursor-pointer hover:bg-[#5a626f] p-1.5 rounded transition" onclick="editTask(${id}, '${todo.name}')">
+                      <i class="far fa-edit text-[#E3E3E3]"></i>
+                      <p class="text-[#c4c4c4]">Edit task</p>
+                    </li>
+
+                    <li class="flex items-center w-full space-x-2.5 cursor-pointer hover:bg-[#5a626f] p-1.5 rounded transition" onclick="showNotification(this, '${todo.name}')">
+                      <i class="far fa-bell text-[#E3E3E3]"></i>
+                      <p class="text-[#c4c4c4]">Notification</p>
+                    </li>
+                  ` : ""}
+                </ul>
+              </div>
+            </div>
+          </li>`;
+      }
+    });
+  }
+
+  ul.innerHTML = li || `<span class="text-[#d4d4d4] text-[17px]">You don't have any task here</span>`;
 }
 
 showTodo("all");
+
+function PinTask(currentTask) {
+  const taskParent = currentTask.parentElement.parentElement.parentElement.parentElement;
+  const taskIndex = [...ul.children].indexOf(taskParent);
+  const taskData = todos[taskIndex];
+
+  // Check if there's already a pinned task (excluding the current one)
+  const alreadyPinnedIndex = todos.findIndex((todo, index) => todo.status === "pinned" && index !== taskIndex);
+
+  // If current task is not pinned and there's already one pinned, unpin it
+  if (taskData.status !== "pinned" && alreadyPinnedIndex !== -1) {
+    todos[alreadyPinnedIndex].status = "pending";
+  }
+
+  // Toggle pinning for the current task
+// Toggle pinning
+if (taskData.status !== "pinned") {
+  taskData.status = "pinned";
+  todos.splice(taskIndex, 1);
+  todos.unshift(taskData);
+} else {
+  taskData.status = "pending";
+  // ⬇️ Don't touch `completed`!
+  todos.splice(taskIndex, 1);
+  todos.push(taskData);
+}
+
+
+
+  localStorage.setItem("todo-list", JSON.stringify(todos));
+  showTodo("all");
+}
+
+
 
 //Notification function
 const closeBtn = document.getElementById("close-btn");
@@ -172,12 +204,17 @@ notificationBtn.addEventListener("click", () => {
     totalSeconds--;
     console.log(totalSeconds)
 
-    if(totalSeconds <= 0){
+    if (totalSeconds <= 0) {
       clearInterval(countdownInterval);
       sendNotification("Timer done!", `Are you done with the task: ${todos[currentTaskid].name}`);
-
-      if(currentTaskid !== null && todos[currentTaskid]){
-        todos[currentTaskid].status = "completed";
+    
+      if (currentTaskid !== null && todos[currentTaskid]) {
+        if (todos[currentTaskid].status === "pinned") {
+          todos[currentTaskid].completed = true; // ✅ add completed flag, don't change status
+        } else {
+          todos[currentTaskid].status = "completed";
+        }
+    
         localStorage.setItem("todo-list", JSON.stringify(todos));
         showTodo("all");
         currentTaskid = null;
@@ -241,19 +278,21 @@ function showMenu(selectedTask){
 
 
 function updateStatus(selectedTask){
-    let taskName = selectedTask.parentElement.lastElementChild;
-    if(selectedTask.checked){
-        taskName.classList.add("checked");
-        //changing the status of clicked task to completed
-        todos[selectedTask.id].status = "completed";
-    }else{
-        taskName.classList.remove("checked");
-        //changing the status of clicked task to pending
-        todos[selectedTask.id].status = "pending";
-    }
-    localStorage.setItem("todo-list", JSON.stringify(todos));
-    showTodo("all");
+  let taskName = selectedTask.parentElement.lastElementChild;
+  let task = todos[selectedTask.id];
+
+  if(selectedTask.checked){
+      taskName.classList.add("checked");
+      task.completed = true; // ✅ use completed flag
+  } else {
+      taskName.classList.remove("checked");
+      task.completed = false;
+  }
+
+  localStorage.setItem("todo-list", JSON.stringify(todos));
+  showTodo("all");
 }
+
 
 
 taskInput.addEventListener("keyup", (e) => {
@@ -263,7 +302,7 @@ taskInput.addEventListener("keyup", (e) => {
             if(!todos){
                 todos = [];//if todos doesn't exist pass an empty array
             }
-            let taskInfo = {name: userTask, status: "pending"};
+            let taskInfo = { name: userTask, status: "pending", time: time, completed: false };
             todos.push(taskInfo);
         }else{
             isEditedTask = false;
