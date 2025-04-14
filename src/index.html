@@ -8,7 +8,12 @@
     <title>Modern todo-list app</title>
   </head>
   <body
-    class="w-screen h-screen overflow-hidden font-[roboto] relative sm:bg-[#aaa]"
+    class="w-screen h-screen overflow-hidden font-[roboto] relative"
+    style="
+      background: url('todo-list-bg.png');
+      background-position: center;
+      background-size: cover;
+    "
   >
     <div
       id="todo-container"
@@ -62,7 +67,6 @@
       <!-- Filtration section end -->
 
       <!-- Tasks section -->
-      <!--max-h-[300px] overflow-y-auto pt-[49px]-->
       <ul
         class="md:mx-8 mx-5 flex items-center justify-center flex-col mt-5 space-y-2.5"
         id="ul"
