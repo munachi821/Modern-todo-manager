@@ -144,31 +144,39 @@ let currentTaskid = null;
 
 function showNotification(userNotificationBtn, taskInfo) {
   taskMsg.textContent = taskInfo;
-  handleNotificationclose();
 
   const parentLi = userNotificationBtn.parentElement.parentElement.parentElement.parentElement;
   currentTaskid = parseInt(parentLi.querySelector("input[type='checkbox']").id);
 
+  openNotification();
+
+  // Add listener for clicking outside the notification
   outsideClickListener = function (e) {
-    if (
-      !notification.contains(e.target) &&
-      e.target !== userNotificationBtn &&
-      e.target !== userNotificationBtn.lastElementChild
-    ) {
-      notification.classList.add("opacity-0", "scale-0", "left-[-350px]");
-      notification.classList.remove("left-4");
-      document.removeEventListener("click", outsideClickListener);
+    const clickedInside = notification.contains(e.target) || userNotificationBtn.contains(e.target);
+    if (!clickedInside) {
+      closeNotification();
     }
   };
 
-  // Add the listener
   document.addEventListener("click", outsideClickListener);
-
-  // Close button
-  closeBtn.addEventListener("click", () => {
-    handleNotificationclose();
-  });
 }
+function openNotification() {
+  notification.classList.remove("opacity-0", "scale-0", "left-[-350px]");
+  notification.classList.add("left-4");
+}
+
+function closeNotification() {
+  notification.classList.add("opacity-0", "scale-0", "left-[-350px]");
+  notification.classList.remove("left-4");
+  document.removeEventListener("click", outsideClickListener);
+  outsideClickListener = null;
+}
+
+// Close button
+closeBtn.addEventListener("click", (e) => {
+  e.stopPropagation(); // prevent triggering the outside click
+  closeNotification();
+});
 
 
 const notificationBtn = document.getElementById("notificationBtn");
