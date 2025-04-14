@@ -160,6 +160,7 @@ function showNotification(userNotificationBtn, taskInfo) {
 
   document.addEventListener("click", outsideClickListener);
 }
+
 function openNotification() {
   notification.classList.remove("opacity-0", "scale-0", "left-[-350px]");
   notification.classList.add("left-4");
